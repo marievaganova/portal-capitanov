@@ -163,6 +163,24 @@
     const errorEl = $('#ann-error');
     const submit  = $('#ann-submit');
     const thanks  = $('#ann-thanks');
+    const trigger = $('#ann-trigger');
+    const triggerWrap = $('#ann-trigger-wrap');
+    const section = $('#ann-section');
+    const closeBtn = $('#ann-close');
+
+    const open = () => {
+      triggerWrap.style.display = 'none';
+      section.style.display = 'block';
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => $('#ann-body').focus(), 300);
+    };
+    const close = () => {
+      section.style.display = 'none';
+      triggerWrap.style.display = 'block';
+      thanks.style.display = 'none';
+    };
+    trigger.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
 
     const handle = window.Auth.getCurrentHandle();
     if (handle) $('#ann-tg').value = handle;
@@ -199,7 +217,7 @@
       form.reset();
       if (handle) $('#ann-tg').value = handle;
       thanks.style.display = 'block';
-      setTimeout(() => { thanks.style.display = 'none'; }, 6000);
+      setTimeout(() => { close(); }, 2500);
     });
   }
 })();

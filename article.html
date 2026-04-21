@@ -36,11 +36,19 @@
         </button>
       </div>
 
-      <hr class="divider" />
+      <!-- Триггер формы аннотации -->
+      <div class="text-center mt-12 mb-12" id="ann-trigger-wrap">
+        <button type="button" id="ann-trigger" class="ann-trigger-link">
+          Оставить обратную связь на материал
+        </button>
+      </div>
 
-      <!-- Форма аннотации -->
-      <section class="card" style="padding: 24px;">
-        <h2 class="font-display text-xl mb-1" style="font-weight: 600;">Обратная связь на материал</h2>
+      <!-- Форма аннотации (скрыта по умолчанию) -->
+      <section id="ann-section" class="card" style="padding: 24px; display: none;">
+        <div class="flex items-start justify-between gap-4 mb-1">
+          <h2 class="font-display text-xl" style="font-weight: 600;">Обратная связь на материал</h2>
+          <button type="button" id="ann-close" class="btn-ghost text-sm">Свернуть</button>
+        </div>
         <p class="muted text-sm mb-5">Нашёл неточность, устаревшее или хочешь предложить другой подход — напиши здесь.</p>
 
         <form id="annotation-form" novalidate>

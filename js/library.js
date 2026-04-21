@@ -145,18 +145,17 @@
 
   function renderArticleCard(a) {
     const cat = categoryNameById(a.category_id);
-    const preview = App.plainPreview(a.body_md, 120);
+    const preview = App.plainPreview(a.body_md, 90);
     return `
-      <a href="article.html?id=${encodeURIComponent(a.id)}" class="card card-article block" style="text-decoration: none;">
-        <div class="flex items-center justify-between mb-3 gap-2">
+      <a href="article.html?id=${encodeURIComponent(a.id)}" class="card card-article lib-card" style="text-decoration: none;">
+        <div class="lib-card-head">
           ${cat ? `<span class="badge">${App.escapeHtml(cat)}</span>` : '<span></span>'}
-          <span class="text-xs muted">Статья</span>
+          <span class="text-xs muted" style="font-weight: 600;">Статья</span>
         </div>
-        <h3 class="font-display text-lg mb-2" style="font-weight: 600; color: var(--color-text);">
-          ${App.escapeHtml(a.title)}
-        </h3>
-        <p class="text-sm muted mb-4" style="min-height: 2.7em;">${App.escapeHtml(preview)}</p>
-        <div class="flex items-center gap-2 text-sm muted">
+        <h3 class="lib-card-title">${App.escapeHtml(a.title)}</h3>
+        ${preview ? `<p class="lib-card-preview">${App.escapeHtml(preview)}</p>` : ''}
+        <div class="lib-card-spacer"></div>
+        <div class="lib-card-foot">
           ${App.heartIcon(false)}
           <span>${a.likes || 0}</span>
         </div>
@@ -171,28 +170,25 @@
     const date      = App.formatDate(e.event_date);
 
     return `
-      <a href="event.html?id=${encodeURIComponent(e.id)}" class="card block" style="text-decoration: none; padding: 0; overflow: hidden;">
-        <div style="background: var(--color-accent-soft); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;">
-          <div style="width: 56px; height: 56px; border-radius: 999px; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(26,26,255,0.15);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--color-accent)">
+      <a href="event.html?id=${encodeURIComponent(e.id)}" class="card lib-card lib-card-event" style="text-decoration: none;">
+        <div class="lib-card-thumb">
+          <span class="lib-card-thumb-play">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--color-accent)">
               <path d="M8 5v14l11-7z"/>
             </svg>
-          </div>
+          </span>
+          <span class="lib-card-thumb-label">${App.escapeHtml(formatLbl || 'Мероприятие')}</span>
         </div>
-        <div style="padding: 20px;">
-          <div class="flex items-center gap-2 mb-3 flex-wrap">
-            ${formatLbl ? `<span class="badge badge-blue">${App.escapeHtml(formatLbl)}</span>` : ''}
-            ${cat ? `<span class="badge">${App.escapeHtml(cat)}</span>` : ''}
-            ${date ? `<span class="text-xs muted">${App.escapeHtml(date)}</span>` : ''}
-          </div>
-          <h3 class="font-display text-lg mb-2" style="font-weight: 600; color: var(--color-text);">
-            ${App.escapeHtml(e.title)}
-          </h3>
-          ${speaker ? `<p class="text-sm muted mb-4">${App.escapeHtml(speaker)}</p>` : '<p class="text-sm muted mb-4">&nbsp;</p>'}
-          <div class="flex items-center gap-2 text-sm muted">
-            ${App.heartIcon(false)}
-            <span>${e.likes || 0}</span>
-          </div>
+        <div class="lib-card-head">
+          ${cat ? `<span class="badge">${App.escapeHtml(cat)}</span>` : '<span></span>'}
+          ${date ? `<span class="text-xs muted">${App.escapeHtml(date)}</span>` : ''}
+        </div>
+        <h3 class="lib-card-title">${App.escapeHtml(e.title)}</h3>
+        ${speaker ? `<p class="lib-card-preview">${App.escapeHtml(speaker)}</p>` : ''}
+        <div class="lib-card-spacer"></div>
+        <div class="lib-card-foot">
+          ${App.heartIcon(false)}
+          <span>${e.likes || 0}</span>
         </div>
       </a>
     `;

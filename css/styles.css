@@ -129,6 +129,84 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 .card-article { border-left: 3px solid var(--color-accent); }
 
+/* Карточки в библиотеке — компактные, выровнены по высоте, 3 в ряду на десктопе */
+.lib-card {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.lib-card-event { padding: 0; overflow: hidden; }
+.lib-card-event .lib-card-head,
+.lib-card-event .lib-card-title,
+.lib-card-event .lib-card-preview,
+.lib-card-event .lib-card-foot {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.lib-card-event .lib-card-foot { padding-bottom: 14px; }
+
+.lib-card-thumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.lib-card-thumb-play {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lib-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+.lib-card:not(.lib-card-event) .lib-card-head { margin-top: 0; }
+
+.lib-card-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.lib-card-preview {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.lib-card-spacer { flex: 1; }
+
+.lib-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-muted);
+  padding-top: 4px;
+}
+
 /* --------------------------- Бейджи --------------------------- */
 .badge {
   display: inline-flex;
@@ -307,6 +385,21 @@ h1, h2, h3, h4, h5, h6, .font-display {
   font-size: 15px;
 }
 .empty-state .empty-title { font-size: 18px; color: var(--color-text); margin-bottom: 8px; font-family: 'Oswald', sans-serif; }
+
+/* Ссылка-триггер для формы аннотации */
+.ann-trigger-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  color: var(--color-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+.ann-trigger-link:hover { color: var(--color-accent); }
 
 /* Тост */
 .toast {
