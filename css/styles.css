@@ -360,6 +360,46 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 .empty-state .empty-title { font-size: 18px; color: var(--color-text); margin-bottom: 8px; font-family: 'Oswald', sans-serif; }
 
+/* Карточки-радио на форме обращения */
+.type-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  position: relative;
+}
+.type-card:hover { border-color: #B5B5B5; }
+.type-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.type-card.is-selected {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  box-shadow: 0 0 0 1px var(--color-accent) inset;
+}
+.type-card-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+.type-card-title {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-text);
+}
+.type-card-desc {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
 /* Ссылка-триггер для формы аннотации */
 .ann-trigger-link {
   background: none;
