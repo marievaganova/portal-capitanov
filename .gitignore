@@ -1,0 +1,12 @@
+.DS_Store
+.env
+.env.local
+.env.*.local
+node_modules/
+.vercel/
+.idea/
+.vscode/
+*.log
+
+# локальные секреты, не предназначенные для репозитория
+secrets.local.*
