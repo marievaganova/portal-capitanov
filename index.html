@@ -22,22 +22,22 @@
 
       <div class="card" style="padding: 28px;">
         <h1 class="font-display text-2xl mb-2" style="font-weight: 600;">Вход для капитанов</h1>
-        <p class="muted text-sm mb-6">Введи свой Telegram-хэндл, чтобы открыть библиотеку.</p>
+        <p class="muted text-sm mb-6">Введи свой ник в Telegram, чтобы открыть библиотеку.</p>
 
         <form id="login-form" autocomplete="off" novalidate>
-          <label class="field-label" for="handle">Telegram-хэндл</label>
+          <label class="field-label" for="handle">Ник в Telegram</label>
           <input
             id="handle"
             name="handle"
             type="text"
             class="input"
-            placeholder="@username"
+            placeholder="@твой_ник"
             autocapitalize="off"
             autocorrect="off"
             spellcheck="false"
             required
           />
-          <p class="field-hint">Формат: <code>@username</code>. Без <code>t.me/</code> и ссылок.</p>
+          <p class="field-hint">Формат: <code>@твой_ник</code>. Без <code>t.me/</code> и ссылок.</p>
           <p class="field-error" id="handle-error">
             Доступ только для верифицированных капитанов.
             Обратись к Мэри в TG <a href="https://t.me/my_metodolog" class="underline" style="color: var(--color-accent);" target="_blank" rel="noopener">@my_metodolog</a>.
@@ -80,7 +80,7 @@
       const raw = input.value;
       const handle = window.Auth.normalizeHandle(raw);
       if (!handle || handle === '@') {
-        errorEl.textContent = 'Введи свой TG-хэндл (например, @ivanov).';
+        errorEl.textContent = 'Введи свой ник в Telegram (например, @ivanov).';
         errorEl.classList.add('is-visible');
         return;
       }
