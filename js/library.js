@@ -118,26 +118,20 @@
     if (items.length === 0) {
       grid.innerHTML = '';
       count.textContent = '';
-      const hasQuery   = state.query.trim().length > 0;
-      const hasContent = state.articles.length > 0 || state.events.length > 0;
-      empty.style.display = 'block';
-      if (!hasContent) {
-        empty.innerHTML = `
-          <div class="empty-title">Библиотека пополняется</div>
-          <div>Задай вопрос — и он, возможно, станет первой статьёй.</div>
-          <div style="margin-top: 16px;"><a href="ask.html" class="btn btn-primary">Написать обращение</a></div>
-        `;
-      } else if (hasQuery || state.categoryId || state.type !== 'all') {
+      const hasQuery    = state.query.trim().length > 0;
+      const hasFilter   = hasQuery || state.categoryId || state.type !== 'all';
+
+      // Когда фильтр активен — показываем "ничего не нашлось". Без фильтров
+      // (пустая библиотека или открытая "Все/Все") ничего не показываем:
+      // нижний блок "Не нашёл ответ?" уже закрывает этот сценарий.
+      if (hasFilter) {
+        empty.style.display = 'block';
         empty.innerHTML = `
           <div class="empty-title">Ничего не нашлось</div>
           <div>Попробуй другие слова или задай вопрос напрямую.</div>
-          <div style="margin-top: 16px;"><a href="ask.html" class="btn btn-primary">Задать вопрос</a></div>
         `;
       } else {
-        empty.innerHTML = `
-          <div class="empty-title">Пока пусто</div>
-          <div>Контент будет появляться по мере наполнения базы.</div>
-        `;
+        empty.style.display = 'none';
       }
       return;
     }
