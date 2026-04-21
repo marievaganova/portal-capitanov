@@ -52,7 +52,7 @@
   function renderList(rows) {
     const tbody = $('#list-body');
     if (rows.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" class="muted" style="padding: 24px; text-align: center;">Аннотаций нет.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" class="muted" style="padding: 24px; text-align: center;">Аннотаций нет.</td></tr>`;
       return;
     }
     tbody.innerHTML = rows.map((a) => {
@@ -65,8 +65,10 @@
       const isLong = body.length > 220 || (body.match(/\n/g) || []).length >= 4;
       return `
         <tr>
-          <td class="muted" style="white-space: nowrap;">${App.formatDate(a.created_at)}</td>
-          <td><span class="badge">${App.escapeHtml(App.ANNOTATION_TYPE_LABELS[a.annotation_type] || a.annotation_type)}</span></td>
+          <td>
+            <div class="muted text-xs" style="white-space: nowrap;">${App.formatDate(a.created_at)}</div>
+            <div style="margin-top: 4px;"><span class="badge">${App.escapeHtml(App.ANNOTATION_TYPE_LABELS[a.annotation_type] || a.annotation_type)}</span></div>
+          </td>
           <td><a href="${link}" target="_blank" style="color: var(--color-accent);">${App.escapeHtml(title)}</a></td>
           <td>${App.escapeHtml(a.author_name || '')}${tg ? ` <span class="muted">@${App.escapeHtml(tg)}</span>` : ''}</td>
           <td>
