@@ -23,7 +23,7 @@
             <a href="admin-articles.html"    class="${linkClass('articles')}">Статьи</a>
             <a href="admin-events.html"      class="${linkClass('events')}">Мероприятия</a>
             <a href="admin-speakers.html"    class="${linkClass('speakers')}">Спикеры</a>
-            <a href="admin-annotations.html" class="${linkClass('annotations')}">Аннотации</a>
+            <a href="admin-annotations.html" class="${linkClass('annotations')}">Аннотации<span id="nav-annotations-count" class="nav-count-badge" style="display:none;">0</span></a>
             <a href="admin-users.html"       class="${linkClass('users')}">Whitelist</a>
           </nav>
           <div class="site-user">
@@ -39,17 +39,25 @@
       window.location.href = 'admin.html';
     });
 
-    // Счётчик новых запросов
+    // Счётчики: новые запросы и необработанные аннотации.
+    // Аннотации считаются "новыми" пока не удалены — поэтому цифра = всего.
     try {
-      const { count } = await window.sb
-        .from('requests').select('id', { count: 'exact', head: true })
-        .eq('status', 'new');
-      const badge = document.getElementById('nav-requests-count');
-      if (count && count > 0) {
-        badge.textContent = count;
-        badge.style.display = 'inline-block';
-      }
+      const [reqRes, annRes] = await Promise.all([
+        window.sb.from('requests')   .select('id', { count: 'exact', head: true }).eq('status', 'new'),
+        window.sb.from('annotations').select('id', { count: 'exact', head: true }),
+      ]);
+      setBadge('nav-requests-count',    reqRes.count);
+      setBadge('nav-annotations-count', annRes.count);
     } catch (_) { /* ignore */ }
+  }
+
+  function setBadge(id, count) {
+    const badge = document.getElementById(id);
+    if (!badge) return;
+    if (count && count > 0) {
+      badge.textContent = count;
+      badge.style.display = 'inline-block';
+    }
   }
 
   if (document.readyState === 'loading') {

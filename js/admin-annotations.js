@@ -61,13 +61,19 @@
         ? `article.html?id=${encodeURIComponent(a.content_id)}`
         : `event.html?id=${encodeURIComponent(a.content_id)}`;
       const tg = a.author_tg ? a.author_tg.replace(/^@/, '') : '';
+      const body = String(a.body || '');
+      const isLong = body.length > 220 || (body.match(/\n/g) || []).length >= 4;
       return `
         <tr>
           <td class="muted" style="white-space: nowrap;">${App.formatDate(a.created_at)}</td>
           <td><span class="badge">${App.escapeHtml(App.ANNOTATION_TYPE_LABELS[a.annotation_type] || a.annotation_type)}</span></td>
           <td><a href="${link}" target="_blank" style="color: var(--color-accent);">${App.escapeHtml(title)}</a></td>
           <td>${App.escapeHtml(a.author_name || '')}${tg ? ` <span class="muted">@${App.escapeHtml(tg)}</span>` : ''}</td>
-          <td style="max-width: 420px; white-space: pre-wrap;">${App.escapeHtml(a.body || '')}${a.reference_text ? `<div class="muted text-xs mt-1">↳ ${App.escapeHtml(a.reference_text)}</div>` : ''}</td>
+          <td>
+            <div class="ann-body ${isLong ? 'is-clamped' : ''}" data-id="${a.id}">${App.escapeHtml(body)}</div>
+            ${a.reference_text ? `<div class="muted text-xs mt-1">↳ ${App.escapeHtml(a.reference_text)}</div>` : ''}
+            ${isLong ? `<button type="button" class="ann-expand" data-expand="${a.id}">Показать полностью</button>` : ''}
+          </td>
           <td><button type="button" class="btn-ghost text-sm" data-del="${a.id}">Удалить</button></td>
         </tr>
       `;
@@ -76,6 +82,13 @@
     tbody.querySelectorAll('[data-del]').forEach((b) =>
       b.addEventListener('click', () => del(b.dataset.del))
     );
+    tbody.querySelectorAll('[data-expand]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const div = tbody.querySelector(`.ann-body[data-id="${b.dataset.expand}"]`);
+        div.classList.toggle('is-clamped');
+        b.textContent = div.classList.contains('is-clamped') ? 'Показать полностью' : 'Свернуть';
+      });
+    });
   }
 
   async function del(id) {
