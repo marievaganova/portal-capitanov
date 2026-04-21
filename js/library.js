@@ -19,6 +19,26 @@
     await loadData();
     renderCategoryPills();
     applyFilters();
+    loadResponseTime(); // фоновый запрос, не блокирует первый рендер
+  }
+
+  async function loadResponseTime() {
+    const hint = document.getElementById('response-time-hint');
+    if (!hint) return;
+    try {
+      const { data, error } = await window.sb
+        .from('requests')
+        .select('created_at, answered_at')
+        .not('answered_at', 'is', null);
+      if (error || !data || data.length === 0) return; // fallback-текст остаётся
+
+      const hours = data
+        .map((r) => (new Date(r.answered_at) - new Date(r.created_at)) / 3_600_000)
+        .filter((h) => h >= 0 && isFinite(h));
+      const median = App.medianOf(hours);
+      if (median === null) return;
+      hint.textContent = `Среднее время ответа: ~${App.formatHours(median)}`;
+    } catch (_) { /* оставляем fallback */ }
   }
 
   async function loadData() {

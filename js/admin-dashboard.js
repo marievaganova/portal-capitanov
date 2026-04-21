@@ -25,19 +25,16 @@
     const answeredTimes = requests
       .filter((r) => r.answered_at && r.created_at)
       .map((r) => (new Date(r.answered_at) - new Date(r.created_at)) / 3_600_000);
-    const median = medianOf(answeredTimes);
+    const median = App.medianOf(answeredTimes);
 
-    // % закрытых без ответа: closed с answered_at IS NULL, от всех закрытых
-    const closed = requests.filter((r) => r.status === 'closed');
-    const closedNoMeet = closed.filter((r) => !r.answered_at).length;
-    const pctClosedNoMeet = closed.length
-      ? Math.round((closedNoMeet / closed.length) * 100)
-      : 0;
+    // Запросов за последние 7 дней
+    const weekAgo = Date.now() - 7 * 24 * 3_600_000;
+    const last7 = requests.filter((r) => new Date(r.created_at).getTime() >= weekAgo).length;
 
     $('#m-total').textContent = total;
     $('#m-new').textContent = newCount;
-    $('#m-median').textContent = median !== null ? formatHours(median) : '—';
-    $('#m-closed-no-meet').textContent = closed.length ? pctClosedNoMeet + '%' : '—';
+    $('#m-median').textContent = median !== null ? App.formatHours(median) : '—';
+    $('#m-last7').textContent = last7;
 
     // Распределение по типу
     const byType = groupBy(requests, (r) => r.type);
@@ -75,23 +72,11 @@
     `).join('');
   }
 
-  // utils
   function groupBy(arr, keyFn) {
     return arr.reduce((acc, item) => {
       const k = keyFn(item);
       (acc[k] ||= []).push(item);
       return acc;
     }, {});
-  }
-  function medianOf(values) {
-    if (!values.length) return null;
-    const sorted = [...values].sort((a, b) => a - b);
-    const mid = Math.floor(sorted.length / 2);
-    return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-  }
-  function formatHours(h) {
-    if (h < 1)   return `${Math.max(1, Math.round(h * 60))} мин`;
-    if (h < 24)  return `${Math.round(h)} ч`;
-    return `${Math.round(h / 24 * 10) / 10} дн`;
   }
 })();

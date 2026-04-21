@@ -204,6 +204,20 @@
     }
   }
 
+  // ---- статистика ----------------------------------------------------------
+  function medianOf(values) {
+    if (!Array.isArray(values) || values.length === 0) return null;
+    const sorted = [...values].sort((a, b) => a - b);
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  }
+  function formatHours(h) {
+    if (h === null || h === undefined || isNaN(h)) return '';
+    if (h < 1)   return `${Math.max(1, Math.round(h * 60))} мин`;
+    if (h < 24)  return `${Math.round(h)} ч`;
+    return `${Math.round((h / 24) * 10) / 10} дн`;
+  }
+
   window.App = {
     escapeHtml,
     formatDate,
@@ -214,6 +228,8 @@
     heartIcon,
     hasLike,
     toggleLike,
+    medianOf,
+    formatHours,
     EVENT_FORMAT_LABELS,
     REQUEST_TYPE_LABELS,
     ANNOTATION_TYPE_LABELS,
