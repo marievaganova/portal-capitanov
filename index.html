@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Портал капитанов — вход</title>
+  <meta name="description" content="Портал капитанов бизнес-сообщества «Аномалия»." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md">
+      <div class="flex items-center gap-3 justify-center mb-10">
+        <span class="site-logo-mark"></span>
+        <span class="site-logo-text text-lg">Портал капитанов</span>
+      </div>
+
+      <div class="card" style="padding: 28px;">
+        <h1 class="font-display text-2xl mb-2" style="font-weight: 600;">Вход для капитанов</h1>
+        <p class="muted text-sm mb-6">Введи свой Telegram-хэндл, чтобы открыть библиотеку.</p>
+
+        <form id="login-form" autocomplete="off" novalidate>
+          <label class="field-label" for="handle">Telegram-хэндл</label>
+          <input
+            id="handle"
+            name="handle"
+            type="text"
+            class="input"
+            placeholder="@username"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            required
+          />
+          <p class="field-hint">Формат: <code>@username</code>. Без <code>t.me/</code> и ссылок.</p>
+          <p class="field-error" id="handle-error">
+            Доступ только для верифицированных капитанов.
+            Обратись к Мэри в TG <a href="https://t.me/my_metodolog" class="underline" style="color: var(--color-accent);" target="_blank" rel="noopener">@my_metodolog</a>.
+          </p>
+
+          <button type="submit" id="submit-btn" class="btn btn-primary w-full mt-6">Войти</button>
+        </form>
+      </div>
+
+      <p class="text-center text-xs muted mt-8">
+        Портал для капитанов десяток сообщества «Аномалия».
+      </p>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Если уже залогинен — сразу в библиотеку.
+    (function () {
+      const h = window.Auth.getCurrentHandle();
+      if (h) {
+        window.Auth.isAllowed(h).then((ok) => {
+          if (ok) window.location.href = 'library.html';
+          else    window.Auth.clearSession();
+        });
+      }
+    })();
+
+    const form    = document.getElementById('login-form');
+    const input   = document.getElementById('handle');
+    const errorEl = document.getElementById('handle-error');
+    const submit  = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorEl.classList.remove('is-visible');
+
+      const raw = input.value;
+      const handle = window.Auth.normalizeHandle(raw);
+      if (!handle || handle === '@') {
+        errorEl.textContent = 'Введи свой TG-хэндл (например, @ivanov).';
+        errorEl.classList.add('is-visible');
+        return;
+      }
+
+      submit.disabled = true;
+      submit.textContent = 'Проверяем…';
+
+      try {
+        const ok = await window.Auth.isAllowed(handle);
+        if (!ok) {
+          errorEl.innerHTML =
+            'Доступ только для верифицированных капитанов. ' +
+            'Обратись к Мэри в TG ' +
+            '<a href="https://t.me/my_metodolog" class="underline" style="color: var(--color-accent);" target="_blank" rel="noopener">@my_metodolog</a>.';
+          errorEl.classList.add('is-visible');
+          submit.disabled = false;
+          submit.textContent = 'Войти';
+          return;
+        }
+        window.Auth.setCurrentHandle(handle);
+        window.location.href = 'library.html';
+      } catch (err) {
+        console.error(err);
+        errorEl.textContent = 'Что-то пошло не так. Попробуй ещё раз через минуту.';
+        errorEl.classList.add('is-visible');
+        submit.disabled = false;
+        submit.textContent = 'Войти';
+      }
+    });
+  </script>
+</body>
+</html>

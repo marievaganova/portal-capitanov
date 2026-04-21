@@ -1,0 +1,293 @@
+/* ============================================================================
+   Портал капитанов — кастомные стили поверх Tailwind
+   ============================================================================ */
+
+:root {
+  --color-bg:          #FFFFFF;
+  --color-surface:     #F5F5F5;
+  --color-text:        #0A0A0A;
+  --color-muted:       #666666;
+  --color-border:      #E0E0E0;
+  --color-border-btn:  #D4D4D4;
+  --color-accent:      #1A1AFF;
+  --color-accent-soft: #F3F3FF;
+  --color-badge-bg:    #F3F3F3;
+  --color-badge-text:  #333333;
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Mulish', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: 'Oswald', 'Mulish', system-ui, sans-serif;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+}
+
+/* --------------------------- Кнопки --------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  border: 1px solid transparent;
+  line-height: 1;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+.btn-primary:hover:not(:disabled)  { background: #0F0FCC; border-color: #0F0FCC; }
+.btn-primary:disabled              { opacity: 0.55; cursor: not-allowed; }
+
+.btn-secondary {
+  background: #fff;
+  color: var(--color-text);
+  border: 1px solid var(--color-border-btn);
+}
+.btn-secondary:hover:not(:disabled) { background: #FAFAFA; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-muted);
+  border: none;
+  padding: 6px 10px;
+}
+.btn-ghost:hover { color: var(--color-text); }
+
+/* --------------------------- Поля ввода --------------------------- */
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 15px;
+  color: var(--color-text);
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(26, 26, 255, 0.12);
+}
+.textarea { min-height: 120px; resize: vertical; }
+
+.field-label {
+  display: block;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+.field-hint {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-top: 4px;
+}
+.field-error {
+  font-size: 13px;
+  color: #B8001F;
+  margin-top: 6px;
+  display: none;
+}
+.field-error.is-visible { display: block; }
+
+/* --------------------------- Карточки --------------------------- */
+.card {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.card:hover { border-color: #C7C7C7; }
+
+.card-article { border-left: 3px solid var(--color-accent); }
+
+/* --------------------------- Бейджи --------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--color-badge-bg);
+  color: var(--color-badge-text);
+  white-space: nowrap;
+}
+.badge-accent { background: var(--color-accent); color: #fff; }
+.badge-blue   { background: #E6E6FF; color: #1A1AFF; }
+.badge-yellow { background: #FFF4D1; color: #8A6100; }
+.badge-green  { background: #DDF5E3; color: #1B6B32; }
+.badge-gray   { background: #EDEDED; color: #555;   }
+.badge-red    { background: #FDE2E2; color: #9A1F1F; }
+
+/* --------------------------- Пиллы категорий --------------------------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: #F3F3F3;
+  color: #333;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+.pill:hover { background: #E8E8E8; }
+.pill.is-active { background: var(--color-accent); color: #fff; }
+
+/* --------------------------- Шапка --------------------------- */
+.site-header {
+  border-bottom: 0.5px solid var(--color-border);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.site-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--color-text);
+}
+.site-logo-mark {
+  width: 22px;
+  height: 22px;
+  background: var(--color-accent);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.site-logo-text {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.site-nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.site-nav a {
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-decoration: none;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+}
+.site-nav a:hover     { color: var(--color-text); }
+.site-nav a.is-active { color: var(--color-text); border-bottom-color: var(--color-accent); }
+
+.site-user {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+.site-user-handle { font-weight: 600; color: var(--color-text); }
+
+/* Мобильная шапка */
+@media (max-width: 640px) {
+  .site-header-inner { flex-wrap: wrap; gap: 12px; padding: 12px 16px; }
+  .site-nav { order: 3; width: 100%; justify-content: flex-start; border-top: 0.5px solid var(--color-border); padding-top: 10px; }
+  .site-user { margin-left: auto; }
+  .site-logo-text { font-size: 14px; }
+}
+
+/* --------------------------- Вспомогательное --------------------------- */
+.container-narrow { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+.container        { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+.muted { color: var(--color-muted); }
+
+.divider {
+  height: 0.5px;
+  background: var(--color-border);
+  border: none;
+  margin: 24px 0;
+}
+
+/* Markdown-контент */
+.md-content p         { margin-bottom: 1em; line-height: 1.7; }
+.md-content h2        { font-size: 22px; font-weight: 600; margin-top: 1.5em; margin-bottom: 0.6em; }
+.md-content h3        { font-size: 18px; font-weight: 600; margin-top: 1.3em; margin-bottom: 0.5em; }
+.md-content ul,
+.md-content ol        { padding-left: 1.5em; margin-bottom: 1em; }
+.md-content li        { margin-bottom: 0.3em; }
+.md-content a         { color: var(--color-accent); text-decoration: underline; }
+.md-content code      { background: #F3F3F3; padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
+.md-content blockquote{ border-left: 3px solid var(--color-border); padding-left: 1em; color: var(--color-muted); }
+
+/* Состояния загрузки и пустоты */
+.loading-state,
+.empty-state {
+  padding: 48px 20px;
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 15px;
+}
+.empty-state .empty-title { font-size: 18px; color: var(--color-text); margin-bottom: 8px; font-family: 'Oswald', sans-serif; }
+
+/* Тост */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0A0A0A;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.toast.is-visible { opacity: 1; }
