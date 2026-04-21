@@ -443,6 +443,16 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 /* Админская шапка */
 .admin-header { background: #0A0A0A; color: #fff; border-bottom: none; }
+.admin-header .site-nav {
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  -ms-overflow-style: none;
+  white-space: nowrap;
+}
+.admin-header .site-nav::-webkit-scrollbar { height: 4px; }
+.admin-header .site-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+.admin-header .site-nav a { flex-shrink: 0; }
 .admin-header .site-logo,
 .admin-header .site-user-handle { color: #fff; }
 .admin-header .site-nav a { color: rgba(255,255,255,0.7); }
