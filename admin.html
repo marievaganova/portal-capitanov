@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Админка — Портал капитанов</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md">
+      <div class="flex items-center gap-3 justify-center mb-10">
+        <span class="site-logo-mark"></span>
+        <span class="site-logo-text text-lg">Портал капитанов</span>
+        <span class="admin-badge" style="background: #0A0A0A;">Админка</span>
+      </div>
+
+      <div class="card" style="padding: 28px;">
+        <h1 class="font-display text-2xl mb-2" style="font-weight: 600;">Вход в админку</h1>
+        <p class="muted text-sm mb-6">Пароль знает только Мэри.</p>
+
+        <form id="admin-login-form" autocomplete="off" novalidate>
+          <label class="field-label" for="password">Пароль</label>
+          <input id="password" name="password" type="password" class="input" required autofocus />
+          <p class="field-error" id="admin-error">Неверный пароль.</p>
+
+          <button type="submit" id="admin-submit" class="btn btn-primary w-full mt-6">Войти</button>
+        </form>
+      </div>
+
+      <div class="text-center mt-6">
+        <a href="library.html" class="text-xs muted underline">← К сайту</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Если уже залогинен — сразу на дашборд.
+    if (window.Auth.isAdmin()) window.location.href = 'admin-dashboard.html';
+
+    const form    = document.getElementById('admin-login-form');
+    const input   = document.getElementById('password');
+    const errorEl = document.getElementById('admin-error');
+    const submit  = document.getElementById('admin-submit');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errorEl.classList.remove('is-visible');
+      if (window.Auth.checkAdminPassword(input.value)) {
+        window.Auth.setAdmin(true);
+        window.location.href = 'admin-dashboard.html';
+      } else {
+        errorEl.classList.add('is-visible');
+        submit.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

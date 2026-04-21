@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Спикеры — Админка Портала капитанов</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <div id="admin-nav-root" data-active="speakers"></div>
+
+  <main class="flex-1 container py-10">
+    <section id="list-view">
+      <div class="flex items-center justify-between gap-3 mb-6 flex-wrap">
+        <h1 class="font-display text-3xl" style="font-weight: 600;">Спикеры</h1>
+        <button type="button" id="btn-new" class="btn btn-primary">Новый спикер</button>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Имя</th><th>Telegram</th><th>Добавлен</th><th></th></tr></thead>
+          <tbody id="list-body"><tr><td colspan="4" class="muted">Загружаем…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="edit-view" style="display: none;">
+      <div class="flex items-center gap-3 mb-6">
+        <button type="button" id="btn-back" class="btn-ghost">← Назад к списку</button>
+      </div>
+      <h1 id="edit-title" class="font-display text-3xl mb-6" style="font-weight: 600;">Новый спикер</h1>
+
+      <form id="speaker-form" novalidate>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="field-label" for="f-name">Имя</label>
+            <input id="f-name" type="text" class="input" required />
+          </div>
+          <div>
+            <label class="field-label" for="f-tg">Ник в Telegram</label>
+            <input id="f-tg" type="text" class="input" placeholder="@твой_ник" />
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="field-label" for="f-photo">URL фото</label>
+          <input id="f-photo" type="url" class="input" placeholder="https://…" />
+        </div>
+        <div class="mb-4">
+          <label class="field-label" for="f-bio">Описание (Markdown)</label>
+          <textarea id="f-bio" class="textarea" style="min-height: 200px;"></textarea>
+        </div>
+        <p id="f-error" class="field-error">Имя обязательное.</p>
+        <div class="flex items-center gap-3">
+          <button type="submit" id="f-save" class="btn btn-primary">Сохранить</button>
+          <button type="button" id="f-delete" class="btn btn-secondary" style="display: none;">Удалить</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin-nav.js"></script>
+  <script src="js/admin-speakers.js"></script>
+</body>
+</html>

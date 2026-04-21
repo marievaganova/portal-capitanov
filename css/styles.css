@@ -360,6 +360,158 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 .empty-state .empty-title { font-size: 18px; color: var(--color-text); margin-bottom: 8px; font-family: 'Oswald', sans-serif; }
 
+/* Таблицы админки */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 14px;
+}
+.admin-table th,
+.admin-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 0.5px solid var(--color-border);
+  vertical-align: top;
+}
+.admin-table th {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  color: var(--color-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #FAFAFA;
+}
+.admin-table tr:hover td { background: #FAFAFA; }
+.admin-table .num { color: var(--color-muted); font-variant-numeric: tabular-nums; }
+
+.admin-table-wrap {
+  overflow-x: auto;
+  border: 0.5px solid var(--color-border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+/* Метрики дашборда */
+.metric-card {
+  padding: 18px;
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: 12px;
+}
+.metric-value {
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.1;
+}
+.metric-label {
+  font-size: 12px;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 6px;
+}
+
+/* Админская шапка */
+.admin-header { background: #0A0A0A; color: #fff; border-bottom: none; }
+.admin-header .site-logo,
+.admin-header .site-user-handle { color: #fff; }
+.admin-header .site-nav a { color: rgba(255,255,255,0.7); }
+.admin-header .site-nav a:hover { color: #fff; }
+.admin-header .site-nav a.is-active { color: #fff; border-bottom-color: var(--color-accent); }
+.admin-header .site-user { color: rgba(255,255,255,0.7); }
+.admin-header .admin-badge {
+  background: var(--color-accent);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+.admin-header .btn-ghost { color: rgba(255,255,255,0.7); }
+.admin-header .btn-ghost:hover { color: #fff; }
+.admin-header .nav-count-badge {
+  display: inline-block;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Markdown split-view в форме статьи */
+.md-editor-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 1024px) {
+  .md-editor-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.md-editor-tabs {
+  display: none;
+  border-bottom: 0.5px solid var(--color-border);
+  margin-bottom: 10px;
+}
+.md-editor-tabs button {
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  font-family: 'Mulish', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.md-editor-tabs button.is-active { color: var(--color-text); border-bottom-color: var(--color-accent); }
+@media (max-width: 1023px) {
+  .md-editor-tabs { display: flex; gap: 8px; }
+  .md-editor-grid { grid-template-columns: 1fr; }
+  .md-editor-grid .md-editor-preview,
+  .md-editor-grid .md-editor-source { display: none; }
+  .md-editor-grid.show-source .md-editor-source,
+  .md-editor-grid.show-preview .md-editor-preview { display: block; }
+}
+
+.md-editor-preview {
+  padding: 14px;
+  background: var(--color-surface);
+  border-radius: 8px;
+  min-height: 240px;
+  font-size: 14px;
+}
+
+/* Модалка */
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(10,10,10,0.5);
+  z-index: 80;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+}
+.modal-body {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 720px;
+  width: 100%;
+  padding: 24px;
+}
+
 /* Карточки-радио на форме обращения */
 .type-card {
   display: flex;

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Запросы — Админка Портала капитанов</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <div id="admin-nav-root" data-active="requests"></div>
+
+  <main class="flex-1 container py-10">
+    <h1 class="font-display text-3xl mb-6" style="font-weight: 600;">Очередь запросов</h1>
+
+    <div class="flex flex-wrap gap-3 mb-5 items-end">
+      <div>
+        <label class="field-label" for="flt-status">Статус</label>
+        <select id="flt-status" class="select" style="min-width: 160px;">
+          <option value="">Все</option>
+          <option value="new" selected>Новый</option>
+          <option value="in_progress">В работе</option>
+          <option value="answered">Отвечен</option>
+          <option value="closed">Закрыт</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label" for="flt-type">Тип</label>
+        <select id="flt-type" class="select" style="min-width: 200px;">
+          <option value="">Все</option>
+          <option value="case">Кейс на разбор</option>
+          <option value="question">Вопрос</option>
+          <option value="speaker_proposal">Предложение выступления</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Дата</th><th>Тип</th><th>Имя</th><th>TG</th><th>Город</th><th>Статус</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="requests-body">
+          <tr><td colspan="7" class="muted">Загружаем…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Модалка детали -->
+  <div id="detail-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal-body" id="detail-body"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin-nav.js"></script>
+  <script src="js/admin-requests.js"></script>
+</body>
+</html>

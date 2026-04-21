@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Дашборд — Админка Портала капитанов</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <div id="admin-nav-root" data-active="dashboard"></div>
+
+  <main class="flex-1 container py-10">
+    <h1 class="font-display text-3xl mb-6" style="font-weight: 600;">Дашборд</h1>
+
+    <!-- Метрики -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <div class="metric-card">
+        <div class="metric-value" id="m-total">—</div>
+        <div class="metric-label">Всего запросов</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="m-new">—</div>
+        <div class="metric-label">Новых</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="m-median">—</div>
+        <div class="metric-label">Медиана ответа</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="m-closed-no-meet">—</div>
+        <div class="metric-label">% закрытых без ответа</div>
+      </div>
+    </div>
+
+    <!-- Две колонки: распределение + топы -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <section>
+        <h2 class="font-display text-xl mb-3" style="font-weight: 600;">Распределение запросов по типу</h2>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Тип</th><th class="num">Всего</th><th class="num">Новых</th></tr></thead>
+            <tbody id="by-type-body"><tr><td colspan="3" class="muted">Загружаем…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="font-display text-xl mb-3" style="font-weight: 600;">Топ-5 статей</h2>
+        <div class="grid grid-cols-1 gap-4">
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>По просмотрам</th><th class="num">Views</th></tr></thead>
+              <tbody id="top-views-body"><tr><td colspan="2" class="muted">Загружаем…</td></tr></tbody>
+            </table>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>По лайкам</th><th class="num">Лайки</th></tr></thead>
+              <tbody id="top-likes-body"><tr><td colspan="2" class="muted">Загружаем…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin-nav.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

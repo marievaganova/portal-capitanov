@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Мероприятия — Админка Портала капитанов</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <div id="admin-nav-root" data-active="events"></div>
+
+  <main class="flex-1 container py-10">
+    <section id="list-view">
+      <div class="flex items-center justify-between gap-3 mb-6 flex-wrap">
+        <h1 class="font-display text-3xl" style="font-weight: 600;">Мероприятия</h1>
+        <button type="button" id="btn-new" class="btn btn-primary">Новое мероприятие</button>
+      </div>
+
+      <div class="mb-5">
+        <label class="field-label" for="flt-search">Поиск</label>
+        <input id="flt-search" type="search" class="input" placeholder="Заголовок…" style="max-width: 360px;" />
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Заголовок</th><th>Дата</th><th>Формат</th><th>Спикер</th><th class="num">Likes</th><th></th></tr></thead>
+          <tbody id="list-body"><tr><td colspan="6" class="muted">Загружаем…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="edit-view" style="display: none;">
+      <div class="flex items-center gap-3 mb-6">
+        <button type="button" id="btn-back" class="btn-ghost">← Назад к списку</button>
+      </div>
+      <h1 id="edit-title" class="font-display text-3xl mb-6" style="font-weight: 600;">Новое мероприятие</h1>
+
+      <form id="event-form" novalidate>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="field-label" for="f-title">Заголовок</label>
+            <input id="f-title" type="text" class="input" required />
+          </div>
+          <div>
+            <label class="field-label" for="f-date">Дата</label>
+            <input id="f-date" type="date" class="input" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div>
+            <label class="field-label" for="f-format">Формат</label>
+            <select id="f-format" class="select">
+              <option value="">—</option>
+              <option value="workshop">Воркшоп</option>
+              <option value="tg_live">TG-эфир</option>
+              <option value="meetup">Встреча</option>
+              <option value="talk">Мини-доклад</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="f-category">Категория</label>
+            <select id="f-category" class="select"></select>
+          </div>
+          <div>
+            <label class="field-label" for="f-speaker">Спикер</label>
+            <select id="f-speaker" class="select"></select>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="field-label" for="f-tags">Теги (через запятую)</label>
+          <input id="f-tags" type="text" class="input" />
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="field-label" for="f-video">URL видео</label>
+            <input id="f-video" type="url" class="input" placeholder="https://youtube.com / kinescope.io / rutube.ru" />
+          </div>
+          <div>
+            <label class="field-label" for="f-workbook">URL воркбука</label>
+            <input id="f-workbook" type="url" class="input" placeholder="https://…" />
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="field-label">Материалы (ссылки)</label>
+          <div id="materials-list" class="flex flex-col gap-2"></div>
+          <button type="button" id="materials-add" class="btn-ghost text-sm mt-2">+ Добавить ссылку</button>
+        </div>
+
+        <div class="mb-4">
+          <label class="field-label" for="f-summary">Резюме (Markdown)</label>
+          <textarea id="f-summary" class="textarea" style="min-height: 200px;"></textarea>
+        </div>
+
+        <p id="f-error" class="field-error">Заголовок обязателен.</p>
+        <div class="flex items-center gap-3">
+          <button type="submit" id="f-save" class="btn btn-primary">Сохранить</button>
+          <button type="button" id="f-delete" class="btn btn-secondary" style="display: none;">Удалить</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin-nav.js"></script>
+  <script src="js/admin-events.js"></script>
+</body>
+</html>

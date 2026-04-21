@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whitelist — Админка Портала капитанов</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <div id="admin-nav-root" data-active="users"></div>
+
+  <main class="flex-1 container py-10">
+    <h1 class="font-display text-3xl mb-2" style="font-weight: 600;">Whitelist капитанов</h1>
+    <p class="muted mb-6">Только ники из этого списка могут войти в портал.</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Левая: один + массово -->
+      <div>
+        <div class="card mb-6" style="padding: 20px;">
+          <h3 class="font-display text-lg mb-3" style="font-weight: 600;">Добавить одного</h3>
+          <form id="add-one-form" class="flex gap-2">
+            <input id="add-one-input" type="text" class="input" placeholder="@твой_ник" style="flex: 1;" />
+            <button type="submit" class="btn btn-primary">Добавить</button>
+          </form>
+        </div>
+
+        <div class="card" style="padding: 20px;">
+          <h3 class="font-display text-lg mb-3" style="font-weight: 600;">Добавить списком</h3>
+          <p class="muted text-sm mb-3">Каждый ник с новой строки, с @ или без.</p>
+          <form id="add-bulk-form">
+            <textarea id="add-bulk-input" class="textarea" placeholder="@ivan&#10;@petr&#10;olga"></textarea>
+            <div class="mt-3"><button type="submit" class="btn btn-primary">Добавить всех</button></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Правая: список -->
+      <div>
+        <div class="flex items-center justify-between mb-3 gap-3">
+          <h3 class="font-display text-lg" style="font-weight: 600;">Сейчас в списке <span id="count" class="muted text-sm"></span></h3>
+          <input id="flt-search" type="search" class="input" placeholder="Фильтр…" style="max-width: 200px;" />
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Ник</th><th>Добавлен</th><th></th></tr></thead>
+            <tbody id="list-body"><tr><td colspan="3" class="muted">Загружаем…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin-nav.js"></script>
+  <script src="js/admin-users.js"></script>
+</body>
+</html>

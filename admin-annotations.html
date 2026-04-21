@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Аннотации — Админка Портала капитанов</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <div id="admin-nav-root" data-active="annotations"></div>
+
+  <main class="flex-1 container py-10">
+    <h1 class="font-display text-3xl mb-6" style="font-weight: 600;">Аннотации</h1>
+
+    <div class="flex flex-wrap gap-3 mb-5 items-end">
+      <div>
+        <label class="field-label" for="flt-type">Тип</label>
+        <select id="flt-type" class="select">
+          <option value="">Все</option>
+          <option value="outdated">Устарело</option>
+          <option value="not_applicable">Не применимо</option>
+          <option value="suggest_alternative">Предлагаю другой подход</option>
+          <option value="other">Другое</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label" for="flt-content">К материалу</label>
+        <select id="flt-content" class="select" style="min-width: 260px;">
+          <option value="">Все материалы</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>Дата</th><th>Тип</th><th>Материал</th><th>Автор</th><th>Текст</th><th></th></tr></thead>
+        <tbody id="list-body"><tr><td colspan="6" class="muted">Загружаем…</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin-nav.js"></script>
+  <script src="js/admin-annotations.js"></script>
+</body>
+</html>
