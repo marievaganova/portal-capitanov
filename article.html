@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Статья — Портал капитанов</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <div id="nav-root" data-active="library"></div>
+
+  <main class="flex-1 container-narrow py-10">
+    <a href="library.html" class="text-sm muted inline-flex items-center gap-1 mb-6" style="text-decoration: none;">
+      ← Вернуться к библиотеке
+    </a>
+
+    <div id="article-loading" class="loading-state">Загружаем…</div>
+    <div id="article-error"   class="empty-state"   style="display: none;"></div>
+
+    <article id="article-root" style="display: none;">
+      <div id="article-meta" class="flex items-center gap-3 mb-4 flex-wrap"></div>
+      <h1 id="article-title" class="font-display text-3xl md:text-4xl mb-3" style="font-weight: 600;"></h1>
+      <p id="article-updated" class="text-sm muted mb-8"></p>
+
+      <div id="article-body" class="md-content"></div>
+
+      <div class="flex items-center gap-3 mt-10 mb-10">
+        <button id="like-btn" class="btn btn-secondary" type="button">
+          <span id="like-icon"></span>
+          <span id="like-count">0</span>
+        </button>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Форма аннотации -->
+      <section class="card" style="padding: 24px;">
+        <h2 class="font-display text-xl mb-1" style="font-weight: 600;">Обратная связь на материал</h2>
+        <p class="muted text-sm mb-5">Нашёл неточность, устаревшее или хочешь предложить другой подход — напиши здесь.</p>
+
+        <form id="annotation-form" novalidate>
+          <div class="mb-4">
+            <label class="field-label" for="ann-type">Тип обратной связи</label>
+            <select id="ann-type" class="select" required>
+              <option value="outdated">Устарело</option>
+              <option value="not_applicable">Не применимо</option>
+              <option value="suggest_alternative">Предлагаю другой подход</option>
+              <option value="other" selected>Другое</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="field-label" for="ann-ref">К какому месту относится</label>
+            <input id="ann-ref" type="text" class="input" placeholder="Цитата или ориентир в тексте (опционально)" />
+          </div>
+
+          <div class="mb-4">
+            <label class="field-label" for="ann-body">Текст заметки</label>
+            <textarea id="ann-body" class="textarea" required></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="field-label" for="ann-name">Имя</label>
+              <input id="ann-name" type="text" class="input" required />
+            </div>
+            <div>
+              <label class="field-label" for="ann-tg">Telegram-хэндл</label>
+              <input id="ann-tg" type="text" class="input" placeholder="@username" required />
+            </div>
+          </div>
+
+          <p id="ann-error" class="field-error">Заполни обязательные поля.</p>
+          <button type="submit" id="ann-submit" class="btn btn-primary">Отправить</button>
+        </form>
+
+        <div id="ann-thanks" class="text-sm" style="display: none; color: #1B6B32; margin-top: 12px;">
+          Спасибо! Заметка записана.
+        </div>
+      </section>
+
+      <!-- Связанные статьи -->
+      <section id="related-section" class="mt-12" style="display: none;">
+        <h2 class="font-display text-xl mb-4" style="font-weight: 600;">Связанные статьи</h2>
+        <div id="related-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </section>
+    </article>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/article.js"></script>
+</body>
+</html>

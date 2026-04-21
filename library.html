@@ -14,17 +14,63 @@
 <body class="min-h-screen flex flex-col">
   <div id="nav-root" data-active="library"></div>
 
-  <main class="flex-1 container py-10">
-    <h1 class="font-display text-3xl mb-4" style="font-weight: 600;">Библиотека</h1>
-    <p class="muted">Этот раздел будет заполнен на Этапе 3. Пока — просто проверка, что вход и навигация работают.</p>
+  <main class="flex-1">
+    <!-- Hero: поиск -->
+    <section class="container pt-10 pb-6">
+      <h1 class="font-display text-3xl md:text-4xl mb-3 text-center" style="font-weight: 600;">Библиотека капитанов</h1>
+      <p class="muted text-center mb-8">Ответы на вопросы про набор, встречи, сложные ситуации и формат десятки.</p>
+
+      <div class="max-w-2xl mx-auto">
+        <div class="relative">
+          <input
+            id="search-input"
+            type="search"
+            class="input"
+            placeholder="Найди ответ в библиотеке…"
+            autocomplete="off"
+            style="padding-left: 44px; font-size: 16px;"
+          />
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%);">
+            <circle cx="11" cy="11" r="7"/>
+            <path d="M21 21l-4.3-4.3"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Фильтры -->
+    <section class="container pb-6">
+      <div class="flex flex-wrap gap-2 justify-center mb-3" id="category-pills"></div>
+      <div class="flex flex-wrap gap-2 justify-center text-sm">
+        <button class="pill type-pill is-active" data-type="all">Все</button>
+        <button class="pill type-pill" data-type="article">Статьи</button>
+        <button class="pill type-pill" data-type="event">Мероприятия</button>
+      </div>
+    </section>
+
+    <!-- Результаты -->
+    <section class="container pb-12">
+      <div id="results-count" class="text-sm muted mb-4 text-center"></div>
+      <div id="results" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
+      <div id="empty-state" class="empty-state" style="display: none;"></div>
+    </section>
+
+    <!-- Не нашёл ответ? -->
+    <section class="container pb-16">
+      <div class="card max-w-2xl mx-auto text-center" style="padding: 28px;">
+        <h3 class="font-display text-xl mb-2" style="font-weight: 600;">Не нашёл ответ?</h3>
+        <p class="muted mb-5">Опиши ситуацию или задай вопрос — Мэри прочитает лично и ответит в Telegram.</p>
+        <a href="ask.html" class="btn btn-primary">Написать обращение</a>
+      </div>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
   <script src="js/nav.js"></script>
-  <script>
-    window.Auth.requireCaptain();
-  </script>
+  <script src="js/library.js"></script>
 </body>
 </html>
