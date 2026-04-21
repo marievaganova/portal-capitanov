@@ -147,10 +147,10 @@
     const cat = categoryNameById(a.category_id);
     const preview = App.plainPreview(a.body_md, 90);
     return `
-      <a href="article.html?id=${encodeURIComponent(a.id)}" class="card card-article lib-card" style="text-decoration: none;">
+      <a href="article.html?id=${encodeURIComponent(a.id)}" class="card lib-card" style="text-decoration: none;">
         <div class="lib-card-head">
           ${cat ? `<span class="badge">${App.escapeHtml(cat)}</span>` : '<span></span>'}
-          <span class="text-xs muted" style="font-weight: 600;">Статья</span>
+          <span class="lib-card-type">Статья</span>
         </div>
         <h3 class="lib-card-title">${App.escapeHtml(a.title)}</h3>
         ${preview ? `<p class="lib-card-preview">${App.escapeHtml(preview)}</p>` : ''}
@@ -165,26 +165,19 @@
 
   function renderEventCard(e) {
     const cat       = categoryNameById(e.category_id);
-    const formatLbl = App.EVENT_FORMAT_LABELS[e.format] || '';
+    const formatLbl = App.EVENT_FORMAT_LABELS[e.format] || 'Мероприятие';
     const speaker   = e.speakers && e.speakers.name ? e.speakers.name : '';
     const date      = App.formatDate(e.event_date);
+    const metaLine  = [speaker, date].filter(Boolean).join(' · ');
 
     return `
-      <a href="event.html?id=${encodeURIComponent(e.id)}" class="card lib-card lib-card-event" style="text-decoration: none;">
-        <div class="lib-card-thumb">
-          <span class="lib-card-thumb-play">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--color-accent)">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          </span>
-          <span class="lib-card-thumb-label">${App.escapeHtml(formatLbl || 'Мероприятие')}</span>
-        </div>
+      <a href="event.html?id=${encodeURIComponent(e.id)}" class="card lib-card" style="text-decoration: none;">
         <div class="lib-card-head">
           ${cat ? `<span class="badge">${App.escapeHtml(cat)}</span>` : '<span></span>'}
-          ${date ? `<span class="text-xs muted">${App.escapeHtml(date)}</span>` : ''}
+          <span class="lib-card-type">${App.escapeHtml(formatLbl)}</span>
         </div>
         <h3 class="lib-card-title">${App.escapeHtml(e.title)}</h3>
-        ${speaker ? `<p class="lib-card-preview">${App.escapeHtml(speaker)}</p>` : ''}
+        ${metaLine ? `<p class="lib-card-preview">${App.escapeHtml(metaLine)}</p>` : ''}
         <div class="lib-card-spacer"></div>
         <div class="lib-card-foot">
           ${App.heartIcon(false)}

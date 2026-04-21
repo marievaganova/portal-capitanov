@@ -127,47 +127,13 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 .card:hover { border-color: #C7C7C7; }
 
-.card-article { border-left: 3px solid var(--color-accent); }
-
-/* Карточки в библиотеке — компактные, выровнены по высоте, 3 в ряду на десктопе */
+/* Карточки в библиотеке — единый стиль для статей и мероприятий:
+   тонкая серая обводка 0.5px (наследуется от .card), различие — бейдж в углу */
 .lib-card {
   padding: 16px;
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-.lib-card-event { padding: 0; overflow: hidden; }
-.lib-card-event .lib-card-head,
-.lib-card-event .lib-card-title,
-.lib-card-event .lib-card-preview,
-.lib-card-event .lib-card-foot {
-  padding-left: 16px;
-  padding-right: 16px;
-}
-.lib-card-event .lib-card-foot { padding-bottom: 14px; }
-
-.lib-card-thumb {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
-  font-family: 'Oswald', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.lib-card-thumb-play {
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  background: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
 .lib-card-head {
@@ -175,10 +141,18 @@ h1, h2, h3, h4, h5, h6, .font-display {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-bottom: 8px;
-  margin-top: 12px;
+  margin-bottom: 10px;
 }
-.lib-card:not(.lib-card-event) .lib-card-head { margin-top: 0; }
+
+.lib-card-type {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
 
 .lib-card-title {
   font-family: 'Oswald', sans-serif;
