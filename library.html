@@ -41,11 +41,19 @@
 
     <!-- Фильтры -->
     <section class="container pb-6">
-      <div class="flex flex-wrap gap-2 justify-center mb-3" id="category-pills"></div>
-      <div class="flex flex-wrap gap-2 justify-center text-sm">
-        <button class="pill type-pill is-active" data-type="all">Все</button>
-        <button class="pill type-pill" data-type="article">Статьи</button>
-        <button class="pill type-pill" data-type="event">Мероприятия</button>
+      <div class="max-w-3xl mx-auto">
+        <div class="filter-row">
+          <div class="filter-label">Тема</div>
+          <div class="filter-pills" id="category-pills"></div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-label">Тип</div>
+          <div class="filter-pills">
+            <button class="pill type-pill is-active" data-type="all">Все</button>
+            <button class="pill type-pill" data-type="article">Статьи</button>
+            <button class="pill type-pill" data-type="event">Мероприятия</button>
+          </div>
+        </div>
       </div>
     </section>
 

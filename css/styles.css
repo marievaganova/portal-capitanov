@@ -168,6 +168,40 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .pill:hover { background: #E8E8E8; }
 .pill.is-active { background: var(--color-accent); color: #fff; }
 
+/* --------------------------- Фильтры --------------------------- */
+.filter-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.filter-row:last-child { margin-bottom: 0; }
+
+.filter-label {
+  flex-shrink: 0;
+  width: 60px;
+  padding-top: 7px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .filter-row { gap: 10px; margin-bottom: 16px; }
+  .filter-label { width: 48px; font-size: 10px; padding-top: 6px; }
+}
+
 /* --------------------------- Шапка --------------------------- */
 .site-header {
   border-bottom: 0.5px solid var(--color-border);
