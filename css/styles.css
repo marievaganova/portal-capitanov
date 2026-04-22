@@ -530,6 +530,60 @@ h1, h2, h3, h4, h5, h6, .font-display {
   font-size: 14px;
 }
 
+/* Блок "Материалы для скачивания" в статье */
+.attachments-box {
+  background: var(--color-surface);
+  border-radius: 12px;
+  padding: 20px;
+}
+.attachment-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.attachment-link:hover { border-color: var(--color-accent); background: #FBFBFF; }
+.attachment-icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.attachment-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.attachment-type {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  padding: 2px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* Редактор вложений в админке */
+.attachment-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 120px auto;
+  gap: 8px;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .attachment-row { grid-template-columns: 1fr; }
+}
+
 /* Модалка */
 .modal-backdrop {
   position: fixed; inset: 0;

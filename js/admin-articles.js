@@ -4,7 +4,16 @@
   if (!window.Auth.requireAdmin()) return;
 
   const $ = (s) => document.querySelector(s);
-  const state = { articles: [], categories: [], currentId: null };
+  const state = { articles: [], categories: [], currentId: null, attachments: [] };
+
+  const ATTACHMENT_TYPES = [
+    { value: 'pdf',   label: 'PDF'   },
+    { value: 'docx',  label: 'DOCX'  },
+    { value: 'xlsx',  label: 'XLSX'  },
+    { value: 'pptx',  label: 'PPTX'  },
+    { value: 'zip',   label: 'ZIP'   },
+    { value: 'other', label: 'Другое' },
+  ];
 
   init();
 
@@ -97,6 +106,50 @@
 
     $('#article-form').addEventListener('submit', saveArticle);
     $('#f-delete').addEventListener('click', deleteArticle);
+
+    $('#attachment-add').addEventListener('click', () => {
+      state.attachments.push({ name: '', url: '', type: 'pdf' });
+      renderAttachments();
+    });
+  }
+
+  function renderAttachments() {
+    const root = $('#attachments-list');
+    if (state.attachments.length === 0) {
+      root.innerHTML = `<div class="muted text-sm">Файлов нет. Нажми «+ Добавить файл», если нужно приложить шаблон или PDF.</div>`;
+      return;
+    }
+    const typeOptions = (selected) => ATTACHMENT_TYPES
+      .map((t) => `<option value="${t.value}"${t.value === selected ? ' selected' : ''}>${t.label}</option>`)
+      .join('');
+
+    root.innerHTML = state.attachments.map((a, i) => `
+      <div class="attachment-row" data-idx="${i}">
+        <input type="text" class="input" placeholder="Название файла" data-att-field="name" value="${App.escapeHtml(a.name || '')}" />
+        <input type="url"  class="input" placeholder="https://…"      data-att-field="url"  value="${App.escapeHtml(a.url  || '')}" />
+        <select class="select" data-att-field="type">${typeOptions(a.type || 'pdf')}</select>
+        <button type="button" class="btn-ghost text-sm" data-att-del="${i}">Удалить</button>
+      </div>
+    `).join('');
+
+    root.querySelectorAll('[data-att-field]').forEach((el) => {
+      el.addEventListener('input', (e) => {
+        const row = e.target.closest('.attachment-row');
+        const idx = +row.dataset.idx;
+        state.attachments[idx][e.target.dataset.attField] = e.target.value;
+      });
+      el.addEventListener('change', (e) => {
+        const row = e.target.closest('.attachment-row');
+        const idx = +row.dataset.idx;
+        state.attachments[idx][e.target.dataset.attField] = e.target.value;
+      });
+    });
+    root.querySelectorAll('[data-att-del]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.attachments.splice(+btn.dataset.attDel, 1);
+        renderAttachments();
+      });
+    });
   }
 
   function openEditor(id) {
@@ -109,12 +162,14 @@
     $('#f-tags').value     = a && Array.isArray(a.tags) ? a.tags.join(', ') : '';
     $('#f-status').value   = a ? (a.status || 'draft') : 'draft';
     $('#f-body').value     = a ? a.body_md || '' : '';
+    state.attachments      = a && Array.isArray(a.attachments) ? a.attachments.map((x) => ({ ...x })) : [];
     $('#f-delete').style.display = a ? 'inline-flex' : 'none';
     $('#f-error').classList.remove('is-visible');
 
     $('#list-view').style.display = 'none';
     $('#edit-view').style.display = 'block';
     renderPreview();
+    renderAttachments();
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
@@ -144,12 +199,22 @@
       ? tagsRaw.split(',').map((t) => t.trim()).filter(Boolean)
       : [];
 
+    const validTypes = new Set(ATTACHMENT_TYPES.map((t) => t.value));
+    const attachments = state.attachments
+      .map((a) => ({
+        name: String(a.name || '').trim(),
+        url:  String(a.url  || '').trim(),
+        type: validTypes.has(a.type) ? a.type : 'other',
+      }))
+      .filter((a) => a.name && a.url);
+
     const payload = {
       title,
       body_md: body,
       category_id: $('#f-category').value || null,
       tags,
       status: $('#f-status').value,
+      attachments,
     };
 
     const btn = $('#f-save');

@@ -19,7 +19,7 @@
     try {
       const { data, error } = await window.sb
         .from('articles')
-        .select('id, title, body_md, tags, likes, status, updated_at, category_id, categories(name)')
+        .select('id, title, body_md, tags, likes, status, updated_at, category_id, attachments, categories(name)')
         .eq('id', id)
         .single();
 
@@ -35,6 +35,7 @@
       });
 
       render();
+      renderAttachments();
       setupLike();
       setupAnnotationForm();
       loadRelated();
@@ -60,6 +61,36 @@
 
     $('#article-body').innerHTML = App.renderMarkdown(state.article.body_md);
     document.title = `${state.article.title} — Портал капитанов`;
+  }
+
+  const ATTACHMENT_ICONS = {
+    pdf:   '📄',
+    docx:  '📝',
+    xlsx:  '📊',
+    pptx:  '📑',
+    zip:   '📦',
+    other: '📎',
+  };
+
+  function renderAttachments() {
+    const list = Array.isArray(state.article.attachments) ? state.article.attachments : [];
+    const clean = list.filter((a) => a && a.url && a.name);
+    if (clean.length === 0) return;
+
+    $('#attachments-section').style.display = 'block';
+    $('#attachments-list').innerHTML = clean.map((a) => {
+      const icon = ATTACHMENT_ICONS[a.type] || ATTACHMENT_ICONS.other;
+      const typeLabel = a.type && a.type !== 'other' ? a.type.toUpperCase() : '';
+      return `
+        <li>
+          <a class="attachment-link" href="${App.escapeHtml(a.url)}" target="_blank" rel="noopener">
+            <span class="attachment-icon" aria-hidden="true">${icon}</span>
+            <span class="attachment-name">${App.escapeHtml(a.name)}</span>
+            ${typeLabel ? `<span class="attachment-type">${App.escapeHtml(typeLabel)}</span>` : ''}
+          </a>
+        </li>
+      `;
+    }).join('');
   }
 
   function showError(msg) {
